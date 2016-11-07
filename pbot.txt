@@ -67,7 +67,7 @@ my $homedir = "/tmp";
 my $version = 'irc bot by James Â®';
  
 my @admins = ("Battouz");
-my @hostauth = ("gov");
+my @hostauth = ("org");
 my @channels = ("#Owny");
  
 my $pacotes = 1;
