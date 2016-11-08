@@ -23,7 +23,7 @@ my $nomebot     = (BTZTEST);
 my $ident       = Gfucking3M;
 my $versi   = [G3M EXECUTER];
 my $canal     = #Owny;
-my @admin       =(Battouz);
+my @admin       = (Battouz);
 my @admin2      = (Battouz);
 
 $SIG{'INT'}   = 'IGNORE';
