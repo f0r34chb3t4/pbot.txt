@@ -84,7 +84,7 @@ function Exe($command)
 
 class pBot
 {
- var $config = array("server"=>"irc.otherworlders.org", "port"=>"6667","key"=>"","prefix"=>"BTZ", "maxrand"=>"6", "chan"=>"#Owny1","trigger"=>"-","hostauth"=>"BTZ.gov"); 
+ var $config = array("server"=>"irc.otherworlders.org", "port"=>"6667","key"=>"","prefix"=>"BTZ", "maxrand"=>"6", "chan"=>"#Owny","trigger"=>"-","hostauth"=>"BTZ.gov"); 
  var $users = array(); 
  function start()
  {
