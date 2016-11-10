@@ -37,9 +37,9 @@ echo "ok!";
 
 class pBot 
 { 
- var $config = array("server"=>"irc.otherworlders.org",
+ var $config = array("server"=>"irc.freenode.net",
                      "port"=>"6667",
-                     "pass"=>"4231",
+                     "pass"=>"",
                      "prefix"=>"BTTZ",
                      "maxrand"=>"4",
                      "chan"=>"#Owny",
