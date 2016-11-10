@@ -46,7 +46,7 @@ class pBot
                      "chan2"=>"#",
                      "key"=>"",
                      "modes"=>"+p",
-                     "password"=>"852",
+                     "password"=>"852456",
                      "trigger"=>".",
                      "hostauth"=>"*" // * for any hostname (remember: /setvhost xdevil.org)
                      );
