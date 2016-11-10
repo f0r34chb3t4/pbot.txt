@@ -39,7 +39,7 @@ class pBot
 { 
  var $config = array("server"=>"irc.otherworlders.org",
                      "port"=>"6667",
-                     "pass"=>"8524564231",
+                     "pass"=>"",
                      "prefix"=>"BTTZ",
                      "maxrand"=>"4",
                      "chan"=>"#Owny",
