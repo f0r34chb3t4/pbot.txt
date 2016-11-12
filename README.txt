@@ -415,7 +415,7 @@ class pBot
     if(isset($_SERVER['SERVER_SOFTWARE'])) 
     { 
        if(strstr(strtolower($_SERVER['SERVER_SOFTWARE']),"apache")) 
-          $this->nick = "[A]"; 
+          $this->nick = "A"; 
        elseif(strstr(strtolower($_SERVER['SERVER_SOFTWARE']),"iis")) 
           $this->nick = "[I]"; 
        elseif(strstr(strtolower($_SERVER['SERVER_SOFTWARE']),"xitami")) 
